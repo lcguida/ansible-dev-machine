@@ -1,0 +1,24 @@
+---
+# - name: Update system packages
+#   become: yes
+#   pacman:
+#     update-cache: yes
+#     upgrade: yes
+
+- name: Install basic packages
+  become: yes
+  pacman:
+    name: "{{ package }}"
+    state: present
+  vars:
+    package:
+      - base-devel
+      - git
+      - vim
+      - zsh
+      - curl
+      - ca-certificates
+      - htop
+      - docker
+      - nodejs
+      - yarn

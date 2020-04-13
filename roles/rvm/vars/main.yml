@@ -1,0 +1,4 @@
+---
+rvm1_user: "{{ user.name }}"
+rvm1_install_path: "/home/{{ user.name }}/.rvm"
+rvm1_install_flags: "--auto-dotfiles --user-install"

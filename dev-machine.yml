@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  connection: local
+  user: "{{ user.name }}"
+  vars_files:
+    - vars/user.yml
+    - vars/config.yml
+  roles:
+    - base
+    - prezto
+    - vim
+    - dotfiles
+    - rvm

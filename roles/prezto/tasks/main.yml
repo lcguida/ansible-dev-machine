@@ -1,0 +1,39 @@
+- name: Install prezto from git.
+  git:
+    repo: "{{ prezto_repo_url }}"
+    dest: "/home/{{ user.name }}/.zprezto"
+    track_submodules: yes
+    force: yes
+    update: no
+
+- name: Symlink prezto files
+  file:
+    src: "/home/{{ user.name }}/.zprezto/runcoms/{{ item }}"
+    dest: "~/.{{ item }}"
+    state: link
+    force: true
+  with_items:
+    - zlogout
+    - zprofile
+    - zshenv
+
+- name: Grab zshrc and zpreztorc from dotfiles
+  get_url:
+    url: "https://raw.githubusercontent.com/lcguida/dotfiles/master/{{ item }}"
+    dest: "~/{{ item }}"
+  with_items:
+    - .zpreztorc
+    - .zshrc
+    - .secrets
+
+- name: Set permissions on ~/.zprezto.
+  file:
+    mode: "0755"
+    path: "/home/{{ user.name }}/.zpresto"
+    owner: "{{ user.name }}"
+
+- name: Set zsh as the user shell
+  become: yes
+  user:
+    name: "{{ user.name }}"
+    shell: /usr/bin/zsh

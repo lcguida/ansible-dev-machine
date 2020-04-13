@@ -1,0 +1,31 @@
+---
+- name: Prepare pathogen env
+  file:
+    path: "~/.vim/{{ item }}"
+    state: directory
+  with_items:
+    - autoload
+    - bundle
+
+- name: Install pathogen
+  get_url:
+    url: https://tpo.pe/pathogen.vim
+    dest:  ~/.vim/autoload/pathogen.vim
+
+- name: Install Oceanic-next theme
+  git:
+    repo: https://github.com/mhartington/oceanic-next.git
+    dest: ~/.vim/bundle/oceanic-next
+    force: yes
+    update: no
+
+- name: Install vim-airline and themes
+  git:
+    repo: "https://github.com/vim-airline/{{ item }}"
+    dest: "~/.vim/bundle/{{ item }}"
+    force: yes
+    update: no
+  with_items:
+    - vim-airline
+    - vim-airline-themes
+

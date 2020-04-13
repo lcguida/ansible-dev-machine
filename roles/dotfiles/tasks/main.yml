@@ -1,0 +1,8 @@
+- name: Install dotfiles
+  get_url:
+    url: "https://raw.githubusercontent.com/lcguida/dotfiles/master/{{ item }}"
+    dest: "~/{{ item }}"
+  with_items:
+    - .gemrc
+    - .vimrc
+    - .gitconfig
