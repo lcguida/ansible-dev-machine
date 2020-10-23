@@ -1,39 +1,43 @@
 - name: Install prezto from git.
+  become: yes
+  become_user: guida
   git:
     repo: "{{ prezto_repo_url }}"
-    dest: "/home/{{ user.name }}/.zprezto"
+    dest: /home/guida/.zprezto
     track_submodules: yes
     force: yes
     update: no
 
 - name: Symlink prezto files
   file:
-    src: "/home/{{ user.name }}/.zprezto/runcoms/{{ item }}"
+    src: "/home/guida/.zprezto/runcoms/{{ item }}"
     dest: "~/.{{ item }}"
     state: link
     force: true
+    owner: "guida"
   with_items:
     - zlogout
     - zprofile
     - zshenv
 
-- name: Grab zshrc and zpreztorc from dotfiles
-  get_url:
-    url: "https://raw.githubusercontent.com/lcguida/dotfiles/master/{{ item }}"
-    dest: "~/{{ item }}"
+- name: Install dotfiles
+  file:
+    src: "/home/guida/.dotfiles/{{ item }}"
+    dest: "/home/guida/.{{ item }}"
+    state: link
+    force: true
+    owner: "guida"
   with_items:
-    - .zpreztorc
-    - .zshrc
-    - .secrets
+    - zpreztorc
+    - zshrc
 
 - name: Set permissions on ~/.zprezto.
   file:
     mode: "0755"
-    path: "/home/{{ user.name }}/.zpresto"
-    owner: "{{ user.name }}"
+    path: "/home/guida/.zprezto"
+    owner: "guida"
 
 - name: Set zsh as the user shell
-  become: yes
   user:
-    name: "{{ user.name }}"
+    name: "guida"
     shell: /usr/bin/zsh

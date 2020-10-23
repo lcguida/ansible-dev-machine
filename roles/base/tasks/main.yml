@@ -1,12 +1,10 @@
 ---
-# - name: Update system packages
-#   become: yes
-#   pacman:
-#     update-cache: yes
-#     upgrade: yes
+- name: Update system packages
+  pacman:
+    update-cache: yes
+    upgrade: yes
 
 - name: Install basic packages
-  become: yes
   pacman:
     name: "{{ package }}"
     state: present
@@ -19,6 +17,7 @@
       - curl
       - ca-certificates
       - htop
-      - docker
       - nodejs
       - yarn
+      - keychain # to autoload ssh-keys
+      - code # vscode

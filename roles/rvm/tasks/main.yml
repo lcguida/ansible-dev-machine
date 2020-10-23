@@ -1,5 +1,4 @@
 ---
 - name: Install rvm
-  # become: yes
   include_role:
     name: rvm.ruby

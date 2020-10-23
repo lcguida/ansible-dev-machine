@@ -1,8 +1,21 @@
+- name: Clone dotfiles repository
+  become: yes
+  become_user: guida
+  git:
+    repo: "{{ dot_files_repo }}"
+    dest: "/home/guida/.dotfiles"
+    force: yes
+    update: yes
+
 - name: Install dotfiles
-  get_url:
-    url: "https://raw.githubusercontent.com/lcguida/dotfiles/master/{{ item }}"
-    dest: "~/{{ item }}"
+  become: yes
+  become_user: guida
+  file:
+    src: "/home/guida/.dotfiles/{{ item }}"
+    dest: "/home/guida/.{{ item }}"
+    state: link
   with_items:
-    - .gemrc
-    - .vimrc
-    - .gitconfig
+    - gemrc
+    - vimrc
+    - gitconfig
+    - p10k.zsh

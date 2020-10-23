@@ -1,0 +1,11 @@
+---
+- name: Install basic packages
+  pacman:
+    name: docker
+    state: present
+
+- name: Add user to docker group
+  user:
+    name: guida
+    group: docker
+    append: yes
