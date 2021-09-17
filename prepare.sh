@@ -9,7 +9,7 @@ then
 fi
 
 echo "Installing python and ansible"
-pacman -Sy python ansible
+apt install python3 ansible
 
 echo "Install ansible requirements"
 ansible-galaxy install -r requirements.yml

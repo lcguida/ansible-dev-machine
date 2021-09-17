@@ -1,7 +1,7 @@
 ---
 - name: Prepare pathogen env
   become: yes
-  become_user: guida
+  become_user: "{{ user }}"
   file:
     path: "~/.vim/{{ item }}"
     state: directory
@@ -11,14 +11,14 @@
 
 - name: Install pathogen
   become: yes
-  become_user: guida
+  become_user: "{{ user }}"
   get_url:
     url: https://tpo.pe/pathogen.vim
     dest:  ~/.vim/autoload/pathogen.vim
 
 - name: Install Oceanic-next theme
   become: yes
-  become_user: guida
+  become_user: "{{ user }}"
   git:
     repo: https://github.com/mhartington/oceanic-next.git
     dest: ~/.vim/bundle/oceanic-next
@@ -27,7 +27,7 @@
 
 - name: Install vim-airline and themes
   become: yes
-  become_user: guida
+  become_user: "{{ user }}"
   git:
     repo: "https://github.com/vim-airline/{{ item }}"
     dest: "~/.vim/bundle/{{ item }}"

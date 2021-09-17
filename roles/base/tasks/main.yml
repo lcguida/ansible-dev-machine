@@ -1,23 +1,35 @@
 ---
 - name: Update system packages
-  pacman:
-    update-cache: yes
-    upgrade: yes
+  apt:
+    update-cache: "yes"
+    upgrade: "yes"
+
+- name: Add microsoft PPA gpg key
+  ansible.builtin.apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
+
+- name: Add microsoft PPA
+  ansible.builtin.apt_repository:
+    repo: deb https://packages.microsoft.com/repos/vscode stable main
+    state: present
+    filename: vscode
 
 - name: Install basic packages
-  pacman:
+  apt:
     name: "{{ package }}"
     state: present
   vars:
     package:
-      - base-devel
+      - build-essential
       - git
       - vim
       - zsh
       - curl
       - ca-certificates
       - htop
-      - nodejs
-      - yarn
+      - software-properties-common
       - keychain # to autoload ssh-keys
       - code # vscode
+      - gnupg-agent # For PGP keys
+      - tilix # terminal

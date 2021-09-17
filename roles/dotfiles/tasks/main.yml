@@ -1,18 +1,19 @@
 - name: Clone dotfiles repository
   become: yes
-  become_user: guida
+  become_user: "{{ user }}"
   git:
     repo: "{{ dot_files_repo }}"
-    dest: "/home/guida/.dotfiles"
+    dest: "/home/{{ user }}/.dotfiles"
     force: yes
     update: yes
+    version: master
 
 - name: Install dotfiles
   become: yes
-  become_user: guida
+  become_user: "{{ user }}"
   file:
-    src: "/home/guida/.dotfiles/{{ item }}"
-    dest: "/home/guida/.{{ item }}"
+    src: "/home/{{ user }}/.dotfiles/{{ item }}"
+    dest: "/home/{{ user }}/.{{ item }}"
     state: link
   with_items:
     - gemrc
