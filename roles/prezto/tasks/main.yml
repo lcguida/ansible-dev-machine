@@ -39,6 +39,7 @@
     owner: "{{ user }}"
 
 - name: Set zsh as the user shell
+  become: yes
   user:
     name: "{{ user }}"
     shell: /usr/bin/zsh
